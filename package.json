@@ -1,0 +1,79 @@
+{
+    "author": "Huon Imberger",
+    "dependencies": {
+        "pebble-clay": "^1.0.3"
+    },
+    "keywords": [],
+    "name": "essentials",
+    "pebble": {
+        "capabilities": [
+            "location",
+            "configurable"
+        ],
+        "displayName": "Essentials",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "WEATHER_TEMP",
+            "WEATHER_CODE",
+            "APIKey_DarkSky",
+            "JSReady",
+            "REQUEST_WEATHER",
+            "DATE_FORMAT",
+            "TEMP_F"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/screen-21x25.png",
+                    "menuIcon": true,
+                    "name": "IMAGE_SCREENSHOT_SMALL",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/meteocons_Yahoo_Order_V2.png",
+                    "name": "IMAGE_METEOICONS",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "characterRegex": "[0-9:]",
+                    "file": "fonts/big_noodle_titling.ttf",
+                    "name": "FONT_BIGNOODLE_78",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "characterRegex": "[0-9:%\u00b0 -]",
+                    "file": "fonts/big_noodle_titling.ttf",
+                    "name": "FONT_BIGNOODLE_19",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/big_noodle_titling.ttf",
+                    "name": "FONT_BIGNOODLE_32",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "images/bt-icon.png",
+                    "name": "IMAGE_BT_DISCONNECT",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "basalt",
+            "diorite"
+        ],
+        "uuid": "1e7f59c2-2bd4-4a91-b710-645a240bda7b",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
+}
