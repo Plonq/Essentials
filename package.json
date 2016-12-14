@@ -15,11 +15,13 @@
         "messageKeys": [
             "WEATHER_TEMP",
             "WEATHER_CODE",
-            "APIKey_DarkSky",
+            "WEATHER_APIKEY_DS",
             "JSReady",
             "REQUEST_WEATHER",
             "DATE_FORMAT",
-            "TEMP_F"
+            "TEMP_F",
+            "WEATHER_SOURCE",
+            "WEATHER_APIKEY_OWM"
         ],
         "projectType": "native",
         "resources": {

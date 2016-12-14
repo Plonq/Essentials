@@ -39,9 +39,29 @@ module.exports = [
         "defaultValue": "Weather"
       },
       {
+        "type": "select",
+        "messageKey": "WEATHER_SOURCE",
+        "label": "Weather Source",
+        "options": [
+          { 
+            "label": "DarkSky (forecast.io)",
+            "value": "0"
+          },
+          { 
+            "label": "OpenWeatherMap",
+            "value": "1"
+          }
+        ]
+      },
+      {
         "type": "input",
-        "messageKey": "APIKey_DarkSky",
-        "label": "DarkSky (forecast.io) API Key"
+        "messageKey": "WEATHER_APIKEY_DS",
+        "label": "DarkSky API Key"
+      },
+      {
+        "type": "input",
+        "messageKey": "WEATHER_APIKEY_OWM",
+        "label": "OpenWeatherMap API Key"
       },
       {
         "type": "toggle",

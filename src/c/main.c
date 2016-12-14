@@ -110,16 +110,23 @@ static void update_time(struct tm *tick_time) {
 static void update_date(struct tm *tick_time) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "update_date()");
   static char date_buffer[16];
+  char format_string[16];
   switch (settings.DateFormat) {
     case DATE_FORMAT_METRIC:
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Date format: metric");
-    strftime(date_buffer, sizeof(date_buffer), "%a %d %b", tick_time);
-    break;
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "Date format: metric");
+      strcpy(format_string, "%a %d %b");
+      break;
     case DATE_FORMAT_BACKWARDS:
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Date format: backwards");
-    strftime(date_buffer, sizeof(date_buffer), "%a %b %d", tick_time);
-    break;
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "Date format: backwards");
+      strcpy(format_string, "%a %b %d");
+      break;
+    default:
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "Date format: default (metric)");
+      strcpy(format_string, "%a %d %b");
+      break;
   }
+  strftime(date_buffer, sizeof(date_buffer), format_string, tick_time);
+  
   text_layer_set_text(date_layer, date_buffer);
 }
 
@@ -153,7 +160,9 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   Tuple *temp_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMP);
   Tuple *code_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_CODE);
   // Settings
-  Tuple *apikey_darksky_tuple = dict_find(iterator, MESSAGE_KEY_APIKey_DarkSky);
+  Tuple *wsource_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_SOURCE);
+  Tuple *api_ds_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_APIKEY_DS);
+  Tuple *api_owm_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_APIKEY_OWM);
   Tuple *tempunits_tuple = dict_find(iterator, MESSAGE_KEY_TEMP_F);
   Tuple *dateformat_tuple = dict_find(iterator, MESSAGE_KEY_DATE_FORMAT);
   
@@ -161,11 +170,6 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     // PebbleKit JS is ready! Safe to send messages
     APP_LOG(APP_LOG_LEVEL_DEBUG, "JS is now ready");
     s_js_ready = true;
-    
-    // If temp and code not set, then must be first launch, therefore we want to request weather
-    if (weather_saved == 0) {
-      request_new_weather();
-    }
   }
   
   // Update the weather temp and icon
@@ -179,7 +183,8 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   }
   
   // If api key or temp units changed, request new weather (JS accesses saved settings directly)
-  if (apikey_darksky_tuple || tempunits_tuple) {
+  // Don't actually know if it's necessary to check all three, I assume when settings are saved, all settings are sent no matter what)
+  if (api_ds_tuple || api_owm_tuple || tempunits_tuple) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "api or tempunits received");
     request_new_weather();
   }
